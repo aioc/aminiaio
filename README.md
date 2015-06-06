@@ -1,1 +1,4 @@
-# aminio
+AMINIO
+------
+
+Minature AIOs!
