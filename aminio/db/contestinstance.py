@@ -10,7 +10,7 @@ class ContestInstance(object):
 
     def getQuality(self, quality):
         with conn.cursor() as cur:
-            cur.execute("SELECT %(qual)s FROM instances WHERE name='%(me)s';", {'qual':quality, 'me':self.problemName()})
+            cur.execute("SELECT %(qual)s FROM instances WHERE name=%(me)s;", {'qual':quality, 'me':self.problemName()})
             return cur.fetchone()[0]
 
     @classmethod
@@ -20,7 +20,9 @@ class ContestInstance(object):
             instanceid = cur.fetchone()[0]+1
             cur.execute("INSERT INTO instances VALUES (%(instanceid)s, %(contestid)s, [], %(launched)s);", {'instanceid':instanceid, 'contestid':contestid, 'launched':False})
         return ContestInstance.(instanceid)
-        
+    
+    def instanceId(self):
+        return self._instanceId
 
 	def contestId(self):
         return self._contestid
@@ -36,9 +38,11 @@ class ContestInstance(object):
 
     def addStudent(self, name):
         self._students += Student(name)
+        self.save()
 
     def deleteStudent(self, studentUsername):
         self._students = [o for o in self.students() if o.username() != studentUsername]
+        self.save()
 
     def save(self):
         with conn.cursor() as cur:

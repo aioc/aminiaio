@@ -12,7 +12,7 @@ class Problem(object):
 
     def getQuality(self, quality):
         with conn.cursor() as cur:
-            cur.execute("SELECT %(qual)s FROM problems WHERE name='%(me)s';", {'qual':quality, 'me':self.problemName()})
+            cur.execute("SELECT %(qual)s FROM problems WHERE name=%(me)s;", {'qual':quality, 'me':self.problemName()})
             return cur.fetchone()[0]
 
 	def flavourText(self):

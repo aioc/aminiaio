@@ -11,12 +11,12 @@ class Student(object):
 
     def getQuality(self, quality):
         with conn.cursor() as cur:
-            cur.execute("SELECT %(qual)s FROM students WHERE username='%(me)s';", {'qual':quality, 'me':self.username()})
+            cur.execute("SELECT %(qual)s FROM students WHERE username=%(me)s;", {'qual':quality, 'me':self.username()})
 
 	@classmethod
 	def usernameExists(cls, username):
         with conn.cursor() as cur:
-            cur.execute("SELECT username FROM students WHERE username='%(name)s';", {'name':username})
+            cur.execute("SELECT username FROM students WHERE username=%(name)s;", {'name':username})
             return cur.fetchone() != None
 
 	@classmethod

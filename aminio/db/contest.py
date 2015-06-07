@@ -11,7 +11,7 @@ class Contest(object):
 
     def getQuality(self, quality):
         with conn.cursor() as cur:
-            cur.execute("SELECT %(qual)s FROM contests WHERE id='%(me)s';", {'qual':quality, 'me':self.contestId()})
+            cur.execute("SELECT %(qual)s FROM contests WHERE id=%(me)s;", {'qual':quality, 'me':self.contestId()})
             return cur.fetchone()[0]
 
 	def contestId(self):
