@@ -2,22 +2,29 @@
 
 class Contest(object):
 
+    def __init__(self, contestid):
+        self._id = contestid
+        self._name = getQuality("name")
+        self._length = getQuality("length")
+        self._description = getQuality("description")
+        self._problems = getQuality("problems")
+
+    def getQuality(self, quality):
+        with conn.cursor() as cur:
+            cur.execute("SELECT %(qual)s FROM contests WHERE id='%(me)s';", {'qual':quality, 'me':self.contestId()})
+            return cur.fetchone()[0]
+
 	def contestId(self):
-		''' Returns contest id for CMS. '''
-		return None
+        return self._id
 
 	def name(self):
-		''' Returns name. '''
-		pass
+        return self._name
 
 	def length(self):
-		''' Length in minutes. '''
-		pass
+        return self._length
 
 	def description(self):
-		''' Returns contest description. '''
-		pass
+        return self._description
 
 	def problems(self):
-		''' List of Problems in the contest. '''
-		return None
+        return self._problems
