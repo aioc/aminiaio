@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock title %}
+
+
+{% block header %}
+  
+  {{ super() }}
+
+  <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-12-md">
+          <h2> Mini AIO: Informatics Training </h2>
+          <p> Run practice informatics competitions, complete with difficulty ratings and workthroughs for every problem. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock header %}
+
+
+{% block content %}
+  
+  <div class="col-md-10 col-md-offset-1">
+    {% if current_user.is_authenticated() %}
+      <p> Hi! </p>
+    {% else %}
+      <p> To view and launch contests, <a href="javascript: displayLoginMenu()">create an account</a> by entering a username and password, or <a href="javascript: displayLoginMenu()">login</a> to pick up where you left off. </p>
+    {% endif %}
+  </div>
+
+{% endblock content %}
+

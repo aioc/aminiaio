@@ -1,0 +1,133 @@
+
+{% with messages = get_flashed_messages(with_categories = true) %}
+  {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-dismissable {{ category }}" role="alert" style="margin-bottom: 0px; padding-top: 5px; padding-bottom: 5px">
+            <small>
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </small>
+          </div>
+        {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<nav class="navbar navbar-default" style="margin-bottom: 0">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#aminio-navbar-collapse">
+        <span class="sr-only">Navigate</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">A Mini AIO</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="aminio-navbar-collapse">
+      
+      <ul class="nav navbar-nav navbar-left">
+        {% if current_user.is_authenticated() %}
+          <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Link</a></li>
+        {% else %}
+          {% if current_page == 'index' %}
+            <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+          {% else %}
+            <li><a href="/">Home</a></li>
+          {% endif %}
+        {% endif %}
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+        {% if current_user.is_authenticated() %}
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              {{ current_user.name() }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="/logout"> Logout </a>
+              </li>
+            </ul>
+          </li>
+
+        {% else %}
+
+          <li id="login-dropdown" class="dropdown {%if username %} open {% endif %}">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              Login/Create Account<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <form id="login-form" name="login-form" class="navbar-form" method="POST" action="/" onsubmit="loginFormValidate()">
+                  <div class="container-fluid">
+                    <div class="row" style="margin-bottom: 5px">
+                      <div class="col-md-12">
+                        <input type="text" name="username" id="username" value="{{ username }}" class="form-control" placeholder="Username">
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 8px">
+                      <div class="col-md-12">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                      </div>
+                    </div>
+                    <div class="row" style="padding-left: 20px; padding-right: 20px;">
+                      <span>
+                        <small>
+                          <a href="javascript: loginFormLogin()">Login</a>
+                        </small>
+                      </span>
+                      <span class="pull-right">
+                        <small>
+                          <a href="javascript: loginFormNewAccount()">New Account</a>
+                        </small>
+                      </span>
+                    </div>
+                  </div>
+                  <button type="submit" id="login" hidden></button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        
+        {% endif %}
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+{% if not current_user.is_authenticated() %}
+  <script>
+    var loginFormSubmitted = false;
+    var loginForm = document.forms['login-form'];
+
+    function loginFormValidate() {
+      return !loginFormSubmitted;
+    }
+
+    function loginFormLogin() {
+      if (!loginFormValidate()) return false;
+      loginFormSubmitted = true;
+      loginForm.submit();
+      return true;
+    }
+
+    function loginFormNewAccount() {
+      if (!loginFormValidate()) return false;
+      formSubmitted = true;
+      loginForm.action = "/newaccount";
+      loginForm.submit();
+      return true;
+    }
+
+    function displayLoginMenu() {
+      $('#login-dropdown').addClass('open');
+    }
+  </script>
+{% endif %}

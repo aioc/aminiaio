@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <title>
+      A Mini AIO - {% block title %}
+      {% endblock title %}
+    </title>
+
+    {% block favicon %}
+      <link rel="shortcut icon" href="/static/img/favicon.ico">
+    {% endblock favicon %}
+
+    {% block head %}
+    
+      {% block meta %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% endblock meta %}
+
+      {% block bootstrap_css %}
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+      {% endblock bootstrap_css %}
+
+      {% block styles %}
+      {% endblock styles %}
+
+    {% endblock head %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        
+  </head>
+
+
+  <body>
+    
+    {% block header %}
+      {% include 'header.html' %}
+    {% endblock header %}
+
+    <div class="container">   
+
+      <div class="row">
+        {% block content %}
+        {% endblock content %}
+      </div>
+      
+      <div class="row">  
+        {% block footer %}
+          {% include 'footer.html' %}
+        {% endblock footer %}
+      </div>
+
+    </div>
+
+    {% block bootstrap_js %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    {% endblock bootstrap_js %}
+
+    {% block scripts %}
+    {% endblock scripts %}
+
+  </body>
+
+</html>
